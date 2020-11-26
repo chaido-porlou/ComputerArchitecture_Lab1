@@ -128,9 +128,13 @@
 
 Το συνολικό νούμερο των committed εντολών είναι 5028 (αρχείο *stats.txt*, σειρά 14)
 
-> system.cpu_cluster.cpus.committedInsts     5028    # Number of instructions committed
+> sim_insts                                        5028                       # Number of instructions simulated
 
+Το συνολικό νούμερο των committed operations (including micro ops) είναι 5834. 
 
+>sim_ops                                          5834                       # Number of ops (including micro ops) simulated
+
+Η διαφορά τους πιθανότατα να οφείλεται στο γεγονός ότι μια εντολή μπορεί να αντιστοιχεί σε πολλαπλές micro operations, καθώς και στην ύπαρξη κάποιου pipeline (στην περίπτωση της MinorCPU που τρέξαμε).
 
 ##### c. 
 
@@ -221,6 +225,10 @@ H L2 cache φαίνεται να προσπελάστηκε 479 φορές. (α�
 
 δηλαδή δίνοντας εντολή να χρησιμοποιηθεί κατά προτεραιότητα η L2 cache, το πρόγραμμα γίνεται πιο αργό, ολοκληρώνεται δηλαδή στα 45766500 ticks. Αυτό είναι αναμενόμενο επειδή η L1 cache είναι γρηγορότερη, οπότε αν δώσουμε προτεραιότητα  στην L2, η ολοκλήρωση του προγράμματος θα καθυστερήσει.
 
+![](https://i.ibb.co/bQtBPNC/diagram.png)
+
+Η μεγάλη διαφορά που παρατηρείται στο χρόνο εκτέλεσης της TimingSimpleCPU με την πρόσθεση του flag --l2cache έναντι του χρόνου εκτέλεσης της MinorCPU σε παρόμοια εντολή οφείλεται στο γεγονός ότι η TimingSimpleCPU χρησιμοποιεί αποκλειστικά την πολύ πιο αργή L2 cache, ενώ η MinorCPU αδυνατεί να τρέξει αποκλειστικά με L2 cache. Εναλλακτικά, επιλέξαμε να τρέξουμε το πρόγραμμα με προτεραιότητα στην L2 cache στην περίπτωση της MinorCPU, απόφαση που είχε ως αποτέλεσμα την αύξηση του χρόνου εκτέλεσης, αλλά σε πολύ μικρότερο βαθμό.
+
 #### ΒΙΒΛΙΟΓΡΑΦΙΑ
 
 [Using the default configuration scripts](http://pages.cs.wisc.edu/~david/courses/cs752/Spring2015/gem5-tutorial/part1/example_configs.html)
@@ -244,3 +252,41 @@ H L2 cache φαίνεται να προσπελάστηκε 479 φορές. (α�
 Δεν θεωρώ ότι η εργασία είναι απλοϊκή, ούτε αδικαιολόγητα δύσκολη. Τα ερωτήματα είναι εύστοχα, ώστε να μας ωθήσουν να πειραματιστούμε.
 
 Τέλος, θα βοηθούσε σημαντικά στην κατανόηση και στην ευκολότερη εξαγωγή συμπερασμάτων, αν γινόταν ένα προ-εργαστηριακό μάθημα, με σκοπό να γίνει μία ανάλυση της πληροφορίας που παράγεται στα αρχεία stats και config.
+
+#### FOLDER STRUCTURE
+
+```
+.
+├── m5out								# Stats of hello world example
+│   ├── config
+|   ├── config.json
+│   └── stats.txt
+├── MyProgram MinorCPU
+│   ├── config
+|   ├── config.json
+│   └── stats.txt
+├── MyProgram MinorCPU 500MHz
+│   ├── config
+|   ├── config.json
+│   └── stats.txt
+├── MyProgram MinorCPU --l2cache
+│   ├── config
+|   ├── config.json
+│   └── stats.txt
+├── MyProgram TimingSImpleCPU
+│   ├── config
+|   ├── config.json
+│   └── stats.txt
+├── MyProgram TimingSimpleCPU 500MHz
+│   ├── config
+|   ├── config.json
+│   └── stats.txt
+├── MyProgram TimingSimpleCPU --l2cache
+│   ├── config
+|   ├── config.json
+│   └── stats.txt
+├── cProgram.c							# Example program in C                      
+├── ccc                                 # Cross compiled executable                       
+└── README.MD                    
+```
+
