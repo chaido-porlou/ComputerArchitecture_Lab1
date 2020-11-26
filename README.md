@@ -267,7 +267,6 @@ H L2 cache φαίνεται να προσπελάστηκε 479 φορές. (α�
 
 #### FOLDER STRUCTURE
 
-```
 .
 ├── m5out								# Stats of hello world example
 │   ├── config
@@ -298,7 +297,5 @@ H L2 cache φαίνεται να προσπελάστηκε 479 φορές. (α�
 |   ├── config.json
 │   └── stats.txt
 ├── cProgram.c							# Example program in C                      
-├── ccc                                 # Cross compiled executable                       
+├── ccc								# Cross compiled executable                       
 └── README.MD                    
-```
-
