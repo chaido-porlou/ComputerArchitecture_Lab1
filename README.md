@@ -269,7 +269,7 @@ H L2 cache φαίνεται να προσπελάστηκε 479 φορές. (α�
 
 ```
 .
-├── m5out								# Stats of hello world example
+├── m5out							# Stats of hello world example
 │   ├── config
 |   ├── config.json
 │   └── stats.txt
